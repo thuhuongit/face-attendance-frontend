@@ -9,7 +9,7 @@ const Sidebar = ({ onNavigate }) => (
     <nav class="flex flex-col mt-10 px-4">
     <ul className="space-y-4">
       <li onClick={() => onNavigate("dashboard")} className="cursor-pointer"><i class="fa-solid fa-chart-simple"></i> Dashboard</li>
-      <li onClick={() => onNavigate("attendance")} className="cursor-pointer"><i class="fa-solid fa-file"></i> Bảng công</li>
+      <li onClick={() => onNavigate("attendance")} className="cursor-pointer"><i class="fa-solid fa-clock"></i> Bảng công</li>
       <li onClick={() => onNavigate("salary")} className="cursor-pointer"><i class="fa-solid fa-file"></i> Bảng lương</li>
       <li onClick={() => onNavigate("users")} className="cursor-pointer"> <i class="fa-solid fa-users"></i> Quản lý nhân viên</li>
     </ul>

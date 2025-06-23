@@ -10,7 +10,7 @@ const AttendanceTable = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">🕒 Bảng công</h2>
+      <h2 className="text-2xl font-bold mb-4"> Bảng công</h2>
       <table className="w-full border">
         <thead>
           <tr>

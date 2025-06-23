@@ -25,9 +25,8 @@ const Header = () => {
           <FaBell className="text-gray-600 text-lg cursor-pointer" />
           <span className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">4</span>
         </div>
-        <FaCommentDots className="text-gray-600 text-lg cursor-pointer" />
         <img
-          src="https://flagcdn.com/us.svg"
+          src="https://flagcdn.com/w20/vn.png"
           alt="flag"
           className="w-5 h-5 rounded-full cursor-pointer"
         />
