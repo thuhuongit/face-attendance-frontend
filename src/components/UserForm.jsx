@@ -13,6 +13,8 @@ const UserForm = () => {
   const [role, setRole] = useState("employee");
   const [salaryRate, setSalaryRate] = useState("");
   const [editingId, setEditingId] = useState(null); 
+  const [search, setSearch] = useState("");
+
 
   const fetchUsers = async () => {
     const res = await axios.get(API_URL);
@@ -92,6 +94,11 @@ const UserForm = () => {
   }
 };
 
+// Lọc theo tên 
+const filteredUsers = users.filter((user) =>
+  user.full_name.toLowerCase().includes(search.toLowerCase())
+);
+
 
   return (
     <div className="p-6">
@@ -147,7 +154,18 @@ const UserForm = () => {
         </button>
       </form>
 
-      <h2 className="text-2xl font-bold mb-4">📋 Danh sách nhân viên</h2>
+
+      <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-bold">📋 Danh sách nhân viên</h2>
+          <input
+               type="text"
+               placeholder="Tìm tên nhân viên..."
+               value={search}
+               onChange={(e) => setSearch(e.target.value)}
+               className="border px-3 py-2 rounded w-64"
+          />
+      </div>
+      
       <table className="w-full border border-collapse">
         <thead className="bg-gray-300">
           <tr>
@@ -159,7 +177,7 @@ const UserForm = () => {
           </tr>
         </thead>
         <tbody>
-          {users.map((user) => (
+          {filteredUsers.map((user) => (
             <tr key={user.id} className="hover:bg-gray-50">
               <td className="border px-4 py-2">{user.full_name}</td>
               <td className="border px-4 py-2">{user.email}</td>

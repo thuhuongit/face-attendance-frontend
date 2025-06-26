@@ -3,6 +3,7 @@ import { fetchAttendance } from "../api/api";
 
 const AttendanceTable = () => {
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetchAttendance()
@@ -10,19 +11,34 @@ const AttendanceTable = () => {
       .catch(err => console.error("Lỗi tải dữ liệu:", err));
   }, []);
 
+  // Lọc theo tên người dùng
+  const filteredData = data.filter(item =>
+    item.user_name.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div>
       <h1 className="text-4xl text-center font-bold mb-4">Bảng công</h1>
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Tìm theo tên..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="border px-4 py-2 w-full"
+        />
+      </div>
+
       <table className="w-full border border-collapse">
-        <thead>
-          <tr className="bg-gray-300">
+        <thead className="bg-gray-300">
+          <tr>
             <th className="border px-4 py-2">Tên</th>
             <th className="border px-4 py-2">Check-In</th>
             <th className="border px-4 py-2">Check-Out</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((item, i) => (
+          {filteredData.map((item, i) => (
             <tr key={i}>
               <td className="border px-4 py-2">{item.user_name}</td>
               <td className="border px-4 py-2">
@@ -42,4 +58,3 @@ const AttendanceTable = () => {
 };
 
 export default AttendanceTable;
-
