@@ -5,6 +5,8 @@ import Dashboard from "./components/Dashboard";
 import AttendanceTable from "./components/AttendanceTable";
 import SalaryTable from "./components/SalaryTable";
 import UserForm from "./components/UserForm";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const [view, setView] = useState("dashboard");
@@ -23,7 +25,12 @@ const App = () => {
       <Sidebar onNavigate={setView} />
       <div className="flex-1">
         <Header />
-        <div className="p-6 bg-gray-100 min-h-screen">{renderView()}</div>
+        <div className="p-6 bg-gray-100 min-h-screen">
+          {renderView()}
+        </div>
+
+        {/*  Hiển thị thông báo Toast ở góc phải trên */}
+        <ToastContainer position="top-right" autoClose={3000} />
       </div>
     </div>
   );

@@ -11,19 +11,22 @@ const SalaryTable = () => {
   return (
     <div>
       <h1 className="text-4xl text-center font-bold mb-4">Bảng lương</h1>
-      <table className="w-full border">
+      <table className="w-full border border-collapse">
         <thead>
-          <tr>
-            <th>Tên</th><th>Giờ làm</th><th>Lương/h</th><th>Tổng</th>
+          <tr className="bg-gray-300">
+            <th className="border px-4 py-2">Tên</th>
+            <th className="border px-4 py-2">Giờ làm</th>
+            <th className="border px-4 py-2">Lương/h</th>
+            <th className="border px-4 py-2">Tổng</th>
           </tr>
         </thead>
         <tbody>
           {Object.keys(salaries).map(name => (
             <tr key={name}>
-              <td>{name}</td>
-              <td>{salaries[name].total_hours}</td>
-              <td>{salaries[name].salary_per_hour}</td>
-              <td>{salaries[name].total_salary}</td>
+              <td className="border px-4 py-2">{name}</td>
+              <td className="border px-4 py-2">{salaries[name].total_hours}</td>
+              <td className="border px-4 py-2">{salaries[name].salary_per_hour}</td>
+              <td className="border px-4 py-2" >{salaries[name].total_salary}</td>
             </tr>
           ))}
         </tbody>
