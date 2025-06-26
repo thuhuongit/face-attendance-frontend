@@ -149,7 +149,7 @@ const filteredUsers = users.filter((user) =>
 
         
         </select>
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+        <button type="submit" className="bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded">
           {editingId ? "Cập nhật" : "Thêm"}
         </button>
       </form>
@@ -186,13 +186,13 @@ const filteredUsers = users.filter((user) =>
               <td className="border px-4 py-2 text-center space-x-2">
                 <button
                   onClick={() => handleEdit(user)}
-                  className="px-2 py-1 bg-blue-600 rounded text-white"
+                  className="px-2 py-1 bg-blue-600 hover:bg-blue-800 rounded text-white"
                 >
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
                 <button
                   onClick={() => handleDelete(user.id)}
-                  className="px-2 py-1 bg-red-500 rounded text-white"
+                  className="px-2 py-1 bg-red-600 hover:bg-red-800 rounded text-white"
                 >
                   <i class="fa-solid fa-trash"></i>
                 </button>

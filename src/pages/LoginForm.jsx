@@ -10,6 +10,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,7 +21,7 @@ const LoginForm = () => {
       });
 
       login(res.data.user);
-      toast.success("Đăng nhập thành công!");
+      toast.success("🎉 Đăng nhập thành công!");
 
       if (res.data.user.role === "admin") {
         navigate("/");
@@ -28,51 +29,76 @@ const LoginForm = () => {
         navigate("/employee");
       }
     } catch (err) {
-      toast.error("Sai email hoặc mật khẩu!");
+      toast.error("❌ Sai email hoặc mật khẩu!");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r to-indigo-600 px-4">
-      <div className="bg-white shadow-xl rounded-xl p-8 w-full max-w-md animate-fade-in">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Đăng nhập hệ thống</h2>
-        
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br to-indigo-600 px-4">
+      <div className="bg-white shadow-2xl rounded-xl p-8 w-full max-w-md animate-fade-in">
+        {/* Logo + Title */}
+        <div className="flex items-center justify-center gap-2 text-indigo-700 text-2xl font-bold mb-4">
+          <span>Face Attendance</span>
+          <span className="bg-indigo-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+            PRO
+          </span>
+        </div>
+
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Đăng nhập vào hệ thống 
+        </h2>
+
         <form onSubmit={handleLogin} className="space-y-5">
+          {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              Email
+            </label>
             <input
               type="email"
               id="email"
-              className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="example@gmail.com"
+              className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-1">Mật khẩu</label>
+          {/* Password */}
+          <div className="relative">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              Mật khẩu
+            </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
-              className="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="••••••••"
+              className="w-full border border-gray-300 rounded px-4 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-[38px] cursor-pointer text-gray-500"
+              title={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
+            >
+              <i className={`fa-solid ${showPassword ? "fa-unlock":"fa-lock"}`}></i>
+            </span>
           </div>
 
+          {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200 font-semibold"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded transition duration-200 font-semibold shadow-md"
           >
-            Đăng nhập
+             Đăng nhập
           </button>
         </form>
 
-        <div className="text-center text-sm text-gray-500 mt-4">
+        {/* Footer */}
+        <div className="text-center text-sm text-gray-500 mt-6">
           © {new Date().getFullYear()} Face Attendance. All rights reserved.
         </div>
       </div>
