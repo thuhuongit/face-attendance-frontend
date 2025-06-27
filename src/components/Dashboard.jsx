@@ -5,7 +5,7 @@ import {
 } from "recharts";
 import { fetchUsers, fetchSalary, fetchAttendance } from "../api/api";
 
-const COLORS = ["#4ade80", "#f87171"]; // Xanh: điểm danh, Đỏ: vắng
+const COLORS = ["#4ade80", "#f87171"]; // Xanh: có mặt, Đỏ: vắng
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -20,44 +20,50 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const users = await fetchUsers();
-      const salary = await fetchSalary();
-      const attendance = await fetchAttendance();
+      try {
+        const users = await fetchUsers(); // Danh sách nhân viên
+        const salary = await fetchSalary(); // { name: { total_hours, total_salary } }
+        const attendance = await fetchAttendance(); // [{ date, userId, ... }]
 
-      const totalHours = Object.values(salary.data).reduce(
-        (sum, u) => sum + Number(u.total_hours), 0
-      );
-      const totalSalary = Object.values(salary.data).reduce(
-        (sum, u) => sum + Number(u.total_salary), 0
-      );
+        const totalHours = Object.values(salary.data).reduce(
+          (sum, u) => sum + Number(u.total_hours || 0), 0
+        );
+        const totalSalary = Object.values(salary.data).reduce(
+          (sum, u) => sum + Number(u.total_salary || 0), 0
+        );
 
-      const today = new Date().toISOString().slice(0, 10);
-      const todayAttendance = attendance.data.filter(
-        (log) => log.date === today
-      ).length;
+        const today = new Date().toISOString().slice(0, 10);
+        const todayAttendance = attendance.data.filter(
+          (log) => log.date === today
+        ).length;
 
-      const transformedChart = Object.entries(salary.data).map(
-        ([name, info]) => ({
-          name,
-          hours: Number(info.total_hours),
-          salary: Number(info.total_salary),
-        })
-      );
+        // Bar + Line chart
+        const transformedChart = Object.entries(salary.data).map(
+          ([name, info]) => ({
+            name,
+            hours: Number(info.total_hours || 0),
+            salary: Number(info.total_salary || 0),
+          })
+        );
 
-      const pie = [
-        { name: "Có mặt", value: todayAttendance },
-        { name: "Vắng", value: users.data.length - todayAttendance },
-      ];
+        // Pie chart
+        const pie = [
+          { name: "Có mặt", value: todayAttendance },
+          { name: "Vắng", value: users.data.length - todayAttendance },
+        ];
 
-      setStats({
-        totalUsers: users.data.length,
-        totalHours,
-        totalSalary,
-        todayAttendance,
-      });
+        setStats({
+          totalUsers: users.data.length,
+          totalHours,
+          totalSalary,
+          todayAttendance,
+        });
 
-      setChartData(transformedChart);
-      setPieData(pie);
+        setChartData(transformedChart);
+        setPieData(pie);
+      } catch (err) {
+        console.error("Dashboard fetch error:", err);
+      }
     };
 
     fetchData();
@@ -65,27 +71,27 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1 className="text-4xl font-bold mb-6 text-center">Thống Kê Doanh Số</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">Thống Kê Nhân Sự</h1>
 
-      {/* Cards thống kê */}
+      {/* Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
         <StatCard label="Nhân viên" value={stats.totalUsers} color="bg-blue-100" />
-        <StatCard label="Giờ làm (tổng)" value={stats.totalHours.toFixed(1)} color="bg-green-100" />
+        <StatCard label="Tổng giờ làm" value={stats.totalHours.toFixed(1)} color="bg-green-100" />
         <StatCard label="Tổng lương (VNĐ)" value={stats.totalSalary.toLocaleString()} color="bg-yellow-100" />
         <StatCard label="Điểm danh hôm nay" value={stats.todayAttendance} color="bg-pink-100" />
       </div>
 
-      {/* Biểu đồ tổng hợp */}
+      {/* Biểu đồ */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Bar + Line */}
+        {/* Biểu đồ giờ làm vs lương */}
         <div className="bg-white shadow rounded-xl p-6">
-          <h3 className="text-xl font-semibold mb-4 text-center">Giờ làm & Lương theo nhân viên</h3>
+          <h3 className="text-xl font-semibold mb-4 text-center">Giờ làm và Lương theo nhân viên</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis yAxisId="left" />
-              <YAxis yAxisId="right" orientation="right" />
+              <YAxis yAxisId="left" label={{ value: "Giờ", angle: -90, position: "insideLeft" }} />
+              <YAxis yAxisId="right" orientation="right" label={{ value: "Lương", angle: -90, position: "insideRight" }} />
               <Tooltip />
               <Legend />
               <Bar yAxisId="left" dataKey="hours" fill="#60a5fa" name="Giờ làm" />
@@ -94,7 +100,7 @@ const Dashboard = () => {
           </ResponsiveContainer>
         </div>
 
-        {/* Pie chart */}
+        {/* Biểu đồ tỷ lệ điểm danh */}
         <div className="bg-white shadow rounded-xl p-6 flex flex-col items-center">
           <h3 className="text-xl font-semibold mb-4 text-center">Tỉ lệ điểm danh hôm nay</h3>
           <ResponsiveContainer width="100%" height={300}>

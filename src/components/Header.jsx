@@ -40,9 +40,9 @@ const Header = () => {
             <div className="absolute right-0 mt-2 bg-white rounded shadow w-40 z-50">
               <button
                 onClick={handleLogout}
-                className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-100"
+                className="w-full text-left px-4 py-2 text-xm text-black hover:bg-gray-100"
               >
-                 Đăng xuất
+                 Đăng Xuất
               </button>
             </div>
           )}

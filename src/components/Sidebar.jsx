@@ -9,8 +9,8 @@ const Sidebar = ({ onNavigate }) => (
       </span>
     </div>
 
-    <nav className="mt-10">
-      <ul className="space-y-3">
+    <nav className="mt-15">
+      <ul className="space-y-6">
         <li
           onClick={() => onNavigate("dashboard")}
           className="flex items-center gap-3 cursor-pointer hover:bg-slate-700 p-2 rounded transition-all"
@@ -23,21 +23,21 @@ const Sidebar = ({ onNavigate }) => (
           className="flex items-center gap-3 cursor-pointer hover:bg-slate-700 p-2 rounded transition-all"
         >
           <i className="fa-solid fa-clock w-5 text-green-400"></i>
-          <span>Bảng công</span>
+          <span>Bảng Công</span>
         </li>
         <li
           onClick={() => onNavigate("salary")}
           className="flex items-center gap-3 cursor-pointer hover:bg-slate-700 p-2 rounded transition-all"
         >
           <i className="fa-solid fa-file w-5 text-yellow-400"></i>
-          <span>Bảng lương</span>
+          <span>Bảng Lương</span>
         </li>
         <li
           onClick={() => onNavigate("users")}
           className="flex items-center gap-3 cursor-pointer hover:bg-slate-700 p-2 rounded transition-all"
         >
           <i className="fa-solid fa-users w-5 text-pink-400"></i>
-          <span>Quản lý nhân viên</span>
+          <span>Quản Lý Nhân Viên</span>
         </li>
       </ul>
     </nav>
