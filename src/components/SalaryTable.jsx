@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchSalary } from "../api/api";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 const SalaryTable = () => {
   const [salaries, setSalaries] = useState([]);
@@ -21,6 +23,30 @@ const SalaryTable = () => {
   const filteredData = salaries.filter((item) =>
     item.user_name.toLowerCase().includes(search.toLowerCase())
   );
+
+  // ✅ Hàm export Excel CHUẨN DỮ LIỆU LƯƠNG
+  const exportToExcel = () => {
+    const worksheetData = filteredData.map((item) => ({
+      Tên: item.user_name,
+      "Giờ làm": item.total_hours,
+      "Lương/h": item.salary_per_hour,
+      "Tổng lương": item.total_salary,
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Bảng lương");
+
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    const fileData = new Blob([excelBuffer], {
+      type: "application/octet-stream",
+    });
+    saveAs(fileData, "bang_luong.xlsx");
+  };
 
   return (
     <div>
@@ -57,6 +83,15 @@ const SalaryTable = () => {
           ))}
         </tbody>
       </table>
+
+      {/* Nút xuất Excel */}
+        <button
+          onClick={exportToExcel}
+          className="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+        >
+          Xuất Excel
+        </button>
+      
     </div>
   );
 };
