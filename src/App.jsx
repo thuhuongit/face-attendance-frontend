@@ -8,6 +8,7 @@ import AttendanceTable from "./components/AttendanceTable";
 import SalaryTable from "./components/SalaryTable";
 import UserForm from "./components/UserForm";
 import UserDetail from "./components/UserDetail"; 
+import EmployeeList from "./components/EmployeeList";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "./context/AuthContext";
@@ -43,6 +44,7 @@ const App = () => {
               }
             />
             <Route path="/users/:id" element={<UserDetail />} />
+            <Route path="/employees" element={<EmployeeList />} />
           </Routes>
         </main>
         <ToastContainer position="top-right" autoClose={3000} />

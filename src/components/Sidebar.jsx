@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const [openUserMenu, setOpenUserMenu] = useState(false);
+
+  const [openEmployeeMenu, setOpenEmployeeMenu] = useState(false);
+  const [openAccountMenu, setOpenAccountMenu] = useState(false);
 
   return (
     <div className="w-64 bg-slate-800 text-white min-h-screen p-5 shadow-lg">
@@ -14,7 +16,7 @@ const Sidebar = () => {
         </span>
       </div>
 
-      <nav className="mt-15">
+      <nav className="mt-10">
         <ul className="space-y-6">
           <li
             onClick={() => navigate("/")}
@@ -23,6 +25,7 @@ const Sidebar = () => {
             <i className="fa-solid fa-chart-simple w-5 text-blue-400"></i>
             <span>Dashboard</span>
           </li>
+
           <li
             onClick={() => navigate("/attendance")}
             className="flex items-center gap-3 cursor-pointer hover:bg-slate-700 p-2 rounded transition-all"
@@ -30,6 +33,7 @@ const Sidebar = () => {
             <i className="fa-solid fa-clock w-5 text-green-400"></i>
             <span>Bảng Công</span>
           </li>
+
           <li
             onClick={() => navigate("/salary")}
             className="flex items-center gap-3 cursor-pointer hover:bg-slate-700 p-2 rounded transition-all"
@@ -37,16 +41,18 @@ const Sidebar = () => {
             <i className="fa-solid fa-file w-5 text-yellow-400"></i>
             <span>Bảng Lương</span>
           </li>
+
+          {/* Quản lý nhân viên */}
           <li>
             <div
-              onClick={() => setOpenUserMenu(!openUserMenu)}
+              onClick={() => setOpenEmployeeMenu(!openEmployeeMenu)}
               className="flex items-center gap-3 cursor-pointer hover:bg-slate-700 p-2 rounded transition-all"
             >
               <i className="fa-solid fa-users w-5 text-pink-400"></i>
               <span>Quản Lý Nhân Viên</span>
-              <i className={`fa-solid fa-chevron-${openUserMenu ? "down" : "right"} ml-auto`}></i>
+              <i className={`fa-solid fa-chevron-${openEmployeeMenu ? "down" : "right"} ml-auto`}></i>
             </div>
-            {openUserMenu && (
+            {openEmployeeMenu && (
               <ul className="ml-8 mt-2 space-y-2">
                 <li
                   onClick={() => navigate("/users")}
@@ -55,36 +61,38 @@ const Sidebar = () => {
                   Thêm nhân viên
                 </li>
                 <li
-                  onClick={() => navigate("/users/add")}
+                  onClick={() => navigate("/employees")}
                   className="cursor-pointer hover:underline"
                 >
-                 Danh sách nhân viên
+                  Danh sách nhân viên
                 </li>
               </ul>
             )}
           </li>
+
+          {/* Quản lý tài khoản */}
           <li>
             <div
-              onClick={() => setOpenUserMenu(!openUserMenu)}
+              onClick={() => setOpenAccountMenu(!openAccountMenu)}
               className="flex items-center gap-3 cursor-pointer hover:bg-slate-700 p-2 rounded transition-all"
             >
-              <i class="fa-solid fa-user text-orange-600"></i>
+              <i className="fa-solid fa-user text-orange-600"></i>
               <span>Quản Lý Tài Khoản</span>
-              <i className={`fa-solid fa-chevron-${openUserMenu ? "down" : "right"} ml-auto`}></i>
+              <i className={`fa-solid fa-chevron-${openAccountMenu ? "down" : "right"} ml-auto`}></i>
             </div>
-            {openUserMenu && (
+            {openAccountMenu && (
               <ul className="ml-8 mt-2 space-y-2">
                 <li
-                  onClick={() => navigate("/users")}
+                  onClick={() => navigate("/account/add")}
                   className="cursor-pointer hover:underline"
                 >
                   Thêm tài khoản
                 </li>
                 <li
-                  onClick={() => navigate("/users/add")}
+                  onClick={() => navigate("/account/change-password")}
                   className="cursor-pointer hover:underline"
                 >
-                 Đổi mật khẩu
+                  Đổi mật khẩu
                 </li>
               </ul>
             )}
