@@ -5,8 +5,7 @@ import {
 } from "recharts";
 import { fetchUsers, fetchSalary, fetchAttendance } from "../api/api";
 
-const COLORS = ["#4ade80", "#f87171"]; // Xanh: có mặt, Đỏ: vắng
-
+const COLORS = ["#4ade80", "#f87171"]; 
 const Dashboard = () => {
   const [stats, setStats] = useState({
     totalUsers: 0,
@@ -21,9 +20,9 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const users = await fetchUsers(); // Danh sách nhân viên
-        const salary = await fetchSalary(); // { name: { total_hours, total_salary } }
-        const attendance = await fetchAttendance(); // [{ date, userId, ... }]
+        const users = await fetchUsers(); 
+        const salary = await fetchSalary(); 
+        const attendance = await fetchAttendance(); 
 
         const totalHours = Object.values(salary.data).reduce(
           (sum, u) => sum + Number(u.total_hours || 0), 0
@@ -71,7 +70,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1 className="text-4xl font-bold mb-6 text-center">Thống Kê Nhân Sự</h1>
+      <h1 className="text-4xl font-bold mb-6 text-center">Tổng quan</h1>
 
       {/* Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
