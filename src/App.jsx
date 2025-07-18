@@ -7,7 +7,7 @@ import Dashboard from "./components/Dashboard";
 import AttendanceTable from "./components/AttendanceTable";
 import SalaryTable from "./components/SalaryTable";
 import UserForm from "./components/UserForm";
-import UserDetail from "./components/UserDetail"; // Nếu cần
+import UserDetail from "./components/UserDetail"; 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "./context/AuthContext";

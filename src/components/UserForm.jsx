@@ -16,6 +16,13 @@ const UserForm = () => {
   const [salaryRate, setSalaryRate] = useState("");
   const [editingId, setEditingId] = useState(null); 
   const [search, setSearch] = useState("");
+  const [employeeCode, setEmployeeCode] = useState("");
+  const [gender, setGender] = useState("");
+  const [dob, setDob] = useState("");
+  const [birthPlace, setBirthPlace] = useState("");
+  const [status, setStatus] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [avatarFile, setAvatarFile] = useState(null);
 
 
   const fetchUsers = async () => {
@@ -28,51 +35,77 @@ const UserForm = () => {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      if (editingId) {
-        await axios.put(`${API_URL}/${editingId}`, {
-          full_name: fullName,
-          email,
-          password,
-          role,
-          salary_rate: parseFloat(salaryRate),
-        });
-        toast.success(" Cập nhật thành công!");
-      } else {
-        await axios.post(API_URL, {
-          full_name: fullName,
-          email,
-          password,
-          role,
-          avatar: "",
-          salary_rate: parseFloat(salaryRate),
-        });
-        toast.success(" Nhân viên đã được thêm!");
-      }
-
-      setFullName("");
-      setEmail("");
-      setPassword("");
-      setRole("employee");
-      setSalaryRate("");
-      setEditingId(null);
-      fetchUsers();
-    } catch (err) {
-      console.error(err);
-      toast.error(" Thêm hoặc sửa thất bại!");
+  e.preventDefault();
+  try {
+    const payload = {
+      full_name: fullName,
+      email,
+      password,
+      role,
+      avatar,
+      salary_rate: parseFloat(salaryRate),
+      employee_code: employeeCode,
+      gender,
+      dob,
+      birth_place: birthPlace,
+      status,
+    };
+    if (editingId) {
+      await axios.put(`${API_URL}/${editingId}`, payload);
+      toast.success(" Cập nhật thành công!");
+    } else {
+      await axios.post(API_URL, payload);
+      toast.success(" Nhân viên đã được thêm!");
     }
-  };
+    setFullName("");
+    setEmail("");
+    setPassword("");
+    setRole("employee");
+    setSalaryRate("");
+    setEmployeeCode("");
+    setGender("");
+    setDob("");
+    setBirthPlace("");
+    setStatus("");
+    setEditingId(null);
+    fetchUsers();
+  } catch (err) {
+    console.error(err);
+    toast.error(" Thêm hoặc sửa thất bại!");
+  }
+};
+// Hàm upload file lên server
+const handleAvatarChange = async (e) => {
+  const file = e.target.files[0];
+  setAvatarFile(file);
+  if (file) {
+    const formData = new FormData();
+    formData.append("avatar", file);
+    try {
+      const res = await axios.post("http://localhost:5000/api/upload-avatar", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setAvatar(res.data.url); // url trả về từ backend
+      toast.success("Ảnh đã được tải lên!");
+    } catch (err) {
+      toast.error("Upload ảnh thất bại!");
+    }
+  }
+};
 
   const handleEdit = (user) => {
-    setFullName(user.full_name);
-    setEmail(user.email);
-    setPassword(""); 
-    setRole(user.role);
-    setSalaryRate(user.salary_rate);
-    setEditingId(user.id);
-  };
+  setFullName(user.full_name);
+  setEmail(user.email);
+  setPassword("");
+  setRole(user.role);
+  setSalaryRate(user.salary_rate);
+  setEmployeeCode(user.employee_code || "");
+  setGender(user.gender || "");
+  setDob(user.dob || "");
+  setBirthPlace(user.birth_place || "");
+  setStatus(user.status || "");
+  setEditingId(user.id);
+};
 
   const handleDelete = async (id) => {
   const result = await Swal.fire({
@@ -107,7 +140,16 @@ const filteredUsers = users.filter((user) =>
       <h1 className="text-3xl font-bold text-center mb-4">
         {editingId ? " Sửa thông tin nhân viên" : " Thêm nhân viên"}
       </h1>
+      
       <form onSubmit={handleSubmit} className="space-y-4 mb-10">
+        <input
+          type="text"
+          placeholder="Mã nhân viên"
+          value={employeeCode}
+          onChange={(e) => setEmployeeCode(e.target.value)}
+          className="border px-3 py-2 w-full"
+          required
+        />
         <input
           type="text"
           placeholder="Họ và tên"
@@ -140,6 +182,53 @@ const filteredUsers = users.filter((user) =>
           className="border px-3 py-2 w-full"
           required
         />
+        <select
+          value={gender}
+          onChange={(e) => setGender(e.target.value)}
+          className="border px-3 py-2 w-full"
+          required
+        >
+          <option value="">-- Chọn giới tính --</option>
+          <option value="Nam">Nam</option>
+          <option value="Nữ">Nữ</option>
+          <option value="Khác">Khác</option>
+        </select>
+        <input
+          type="date"
+          placeholder="Ngày sinh"
+          value={dob}
+          onChange={(e) => setDob(e.target.value)}
+          className="border px-3 py-2 w-full"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Nơi sinh"
+          value={birthPlace}
+          onChange={(e) => setBirthPlace(e.target.value)}
+          className="border px-3 py-2 w-full"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Tình trạng"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          className="border px-3 py-2 w-full"
+          required
+        />
+        <div>
+          <label className="block mb-1">Avatar (chọn ảnh):</label>
+          <input
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              className="border px-3 py-2 w-full"
+          />
+          {avatar && (
+              <img src={avatar} alt="avatar" className="mt-2 h-16 rounded" />
+         )}
+        </div>
         <select
           value={role}
           onChange={(e) => setRole(e.target.value)}
