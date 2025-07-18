@@ -1,4 +1,3 @@
-// src/pages/LoginForm.jsx
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +20,7 @@ const LoginForm = () => {
       });
 
       login(res.data.user);
-      toast.success("🎉 Đăng nhập thành công!");
+      toast.success("Đăng nhập thành công!");
 
       if (res.data.user.role === "admin") {
         navigate("/");
@@ -29,7 +28,7 @@ const LoginForm = () => {
         navigate("/employee");
       }
     } catch (err) {
-      toast.error("❌ Sai email hoặc mật khẩu!");
+      toast.error("Sai email hoặc mật khẩu!");
     }
   };
 

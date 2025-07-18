@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+
 
 const API_URL = "http://localhost:5000/api/users";
 
@@ -179,7 +181,11 @@ const filteredUsers = users.filter((user) =>
         <tbody>
           {filteredUsers.map((user) => (
             <tr key={user.id} className="hover:bg-gray-50">
-              <td className="border px-4 py-2">{user.full_name}</td>
+              <td className="border px-4 py-2 hover:underline cursor-pointer">
+                 <Link 
+                    to={`/users/${user.id}`} className="text-blue-600 hover:underline cursor-pointer">{user.full_name}
+                 </Link>
+              </td>
               <td className="border px-4 py-2">{user.email}</td>
               <td className="border px-4 py-2 text-center">{user.role}</td>
               <td className="border px-4 py-2 text-center">{user.salary_rate.toLocaleString()}</td>
