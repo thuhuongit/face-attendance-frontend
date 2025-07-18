@@ -12,6 +12,7 @@ const UserForm = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
   const [role, setRole] = useState("employee");
   const [salaryRate, setSalaryRate] = useState("");
   const [editingId, setEditingId] = useState(null); 
@@ -41,6 +42,7 @@ const UserForm = () => {
       full_name: fullName,
       email,
       password,
+      phone,
       role,
       avatar,
       salary_rate: parseFloat(salaryRate),
@@ -60,6 +62,8 @@ const UserForm = () => {
     setFullName("");
     setEmail("");
     setPassword("");
+    setPhone("");
+    setAvatar("");
     setRole("employee");
     setSalaryRate("");
     setEmployeeCode("");
@@ -97,6 +101,7 @@ const handleAvatarChange = async (e) => {
   setFullName(user.full_name);
   setEmail(user.email);
   setPassword("");
+  setPhone(user.phone);
   setRole(user.role);
   setSalaryRate(user.salary_rate);
   setEmployeeCode(user.employee_code || "");
@@ -171,6 +176,14 @@ const filteredUsers = users.filter((user) =>
           placeholder="Mật khẩu"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          className="border px-3 py-2 w-full"
+          required={!editingId}
+        />
+        <input
+          type="phone"
+          placeholder="Số Điện Thoại"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
           className="border px-3 py-2 w-full"
           required={!editingId}
         />

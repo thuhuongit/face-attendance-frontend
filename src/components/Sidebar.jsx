@@ -103,7 +103,7 @@ const Sidebar = () => {
                   onClick={() => navigate("/account/add")}
                   className={submenuItemClass}
                 >
-                  Thêm tài khoản
+                  Danh sách tài khoản
                 </li>
                 <li
                   onClick={() => navigate("/account/change-password")}

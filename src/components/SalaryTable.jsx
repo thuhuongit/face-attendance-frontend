@@ -66,19 +66,30 @@ const SalaryTable = () => {
       <table className="w-full border border-collapse">
         <thead className="bg-gray-300">
           <tr>
-            <th className="border px-4 py-2">Tên</th>
-            <th className="border px-4 py-2">Giờ làm</th>
+            <th className="border px-4 py-2">STT</th>
+            <th className="border px-4 py-2">Tên nhân viên</th>
+            <th className="border px-4 py-2">Ngày công</th>
             <th className="border px-4 py-2">Lương/h</th>
             <th className="border px-4 py-2">Tổng</th>
+            <th className="border px-4 py-2">Thao Tác</th>
           </tr>
         </thead>
         <tbody>
           {filteredData.map((item, i) => (
             <tr key={i}>
-              <td className="border px-4 py-2">{item.user_name}</td>
-              <td className="border px-4 py-2">{item.total_hours}</td>
-              <td className="border px-4 py-2">{item.salary_per_hour}</td>
-              <td className="border px-4 py-2">{item.total_salary}</td>
+              <td className="border px-4 py-2 text-center">{i + 1}</td>
+              <td className="border px-4 py-2 text-center">{item.user_name}</td>
+              <td className="border px-4 py-2 text-center">{item.total_hours}</td>
+              <td className="border px-4 py-2 text-center">{item.salary_per_hour}</td>
+              <td className="border px-4 py-2 text-center">{item.total_salary}</td>
+              <td className="border px-4 py-2 text-center">
+                  <button
+                      onClick={() => handleDelete(item.employee_code)}
+                      className="px-2 py-1 bg-red-600 hover:bg-red-800 rounded text-white"
+                  >
+                      <i className="fa-solid fa-trash"></i>
+                  </button>
+              </td>
             </tr>
           ))}
         </tbody>

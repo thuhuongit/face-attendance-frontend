@@ -105,13 +105,22 @@ const EmployeeList = () => {
               filteredEmployees.map((emp, index) => (
                 <tr key={emp.id} className="text-slate-700 hover:bg-slate-50">
                   <td className="py-2 px-4 border text-center">{index + 1}</td>
-                  <td className="py-2 px-4 border">{emp.employee_code}</td>
-                  <td className="py-2 px-4 border">{emp.full_name}</td>
-                  <td className="py-2 px-4 border">{emp.email}</td>
-                  <td className="py-2 px-4 border">{emp.gender}</td>
-                  <td className="py-2 px-4 border">{emp.dob}</td>
-                  <td className="py-2 px-4 border">{emp.birth_place}</td>
-                  <td className="py-2 px-4 border">{emp.status}</td>
+                  <td className="py-2 px-4 border text-center">{emp.employee_code}</td>
+                  <td className="py-2 px-4 border text-center">{emp.full_name}</td>
+                  <td className="py-2 px-4 border text-center">{emp.email}</td>
+                  <td className="py-2 px-4 border text-center">{emp.gender}</td>
+                  <td className="py-2 px-4 border text-center">{emp.dob}</td>
+                  <td className="py-2 px-4 border text-center">{emp.birth_place}</td>
+                  <td className="py-2 px-4 border text-center">
+                     <span
+                       className={`font-bold px-2 py-1 rounded 
+                           ${emp.status === "Đang làm việc"
+                               ? "bg-green-100 text-green-800"
+                               : "bg-red-100 text-red-800"}`}
+                    >
+                      {emp.status}
+                    </span>
+                  </td>
                   <td className="py-2 px-4 border">{emp.role || "Nhân viên"}</td>
                   <td className="py-2 px-4 border text-center space-x-2">
                 <button
@@ -127,7 +136,7 @@ const EmployeeList = () => {
                 >
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
-                
+
                 <button
                   onClick={() => handleDelete(user.id)}
                   className="px-2 py-1 bg-red-600 hover:bg-red-800 rounded text-white"
