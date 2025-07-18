@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
@@ -9,6 +10,7 @@ const API_URL = "http://localhost:5000/api/users"; // hoặc endpoint Flask củ
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
   const filteredEmployees = employees.filter((emp) =>
   emp.full_name.toLowerCase().includes(search.toLowerCase())
 );
@@ -84,9 +86,12 @@ const EmployeeList = () => {
             <tr className="bg-slate-100 text-slate-700">
               <th className="py-2 px-4 border">STT</th>
               <th className="py-2 px-4 border">Mã Nhân Viên</th>
-              <th className="py-2 px-4 border">Họ Tên</th>
+              <th className="py-2 px-4 border">Họ và Tên</th>
               <th className="py-2 px-4 border">Email</th>
               <th className="py-2 px-4 border">Giới Tính</th>
+              <th className="py-2 px-4 border">Ngày sinh</th>
+              <th className="py-2 px-4 border">Nơi sinh</th>
+              <th className="py-2 px-4 border">Tình trạng</th>
               <th className="py-2 px-4 border">Chức vụ</th>
               <th className="py-2 px-4 border">Thao tác</th>
             </tr>
@@ -104,14 +109,25 @@ const EmployeeList = () => {
                   <td className="py-2 px-4 border">{emp.full_name}</td>
                   <td className="py-2 px-4 border">{emp.email}</td>
                   <td className="py-2 px-4 border">{emp.gender}</td>
+                  <td className="py-2 px-4 border">{emp.dob}</td>
+                  <td className="py-2 px-4 border">{emp.birth_place}</td>
+                  <td className="py-2 px-4 border">{emp.status}</td>
                   <td className="py-2 px-4 border">{emp.role || "Nhân viên"}</td>
                   <td className="py-2 px-4 border text-center space-x-2">
+                <button
+                      onClick={() => navigate(`/users/${emp.id}`)}
+                      className="px-2 py-1 bg-green-600 hover:bg-green-800 rounded text-white"
+                    >
+                      <i className="fa-solid fa-eye"></i> Xem
+                </button>
+
                 <button
                   onClick={() => handleEdit(user)}
                   className="px-2 py-1 bg-blue-600 hover:bg-blue-800 rounded text-white"
                 >
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
+                
                 <button
                   onClick={() => handleDelete(user.id)}
                   className="px-2 py-1 bg-red-600 hover:bg-red-800 rounded text-white"

@@ -244,58 +244,6 @@ const filteredUsers = users.filter((user) =>
           {editingId ? "Cập nhật" : "Thêm"}
         </button>
       </form>
-
-
-      <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">📋 Danh sách nhân viên</h2>
-          <input
-               type="text"
-               placeholder="Tìm tên nhân viên..."
-               value={search}
-               onChange={(e) => setSearch(e.target.value)}
-               className="border px-3 py-2 rounded w-64"
-          />
-      </div>
-      
-      <table className="w-full border border-collapse">
-        <thead className="bg-gray-300">
-          <tr>
-            <th className="border px-4 py-2">Tên</th>
-            <th className="border px-4 py-2">Email</th>
-            <th className="border px-4 py-2">Vai trò</th>
-            <th className="border px-4 py-2">Lương/h</th>
-            <th className="border px-4 py-2">Hành động</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredUsers.map((user) => (
-            <tr key={user.id} className="hover:bg-gray-50">
-              <td className="border px-4 py-2 hover:underline cursor-pointer">
-                 <Link 
-                    to={`/users/${user.id}`} className="text-blue-600 hover:underline cursor-pointer">{user.full_name}
-                 </Link>
-              </td>
-              <td className="border px-4 py-2">{user.email}</td>
-              <td className="border px-4 py-2 text-center">{user.role}</td>
-              <td className="border px-4 py-2 text-center">{user.salary_rate.toLocaleString()}</td>
-              <td className="border px-4 py-2 text-center space-x-2">
-                <button
-                  onClick={() => handleEdit(user)}
-                  className="px-2 py-1 bg-blue-600 hover:bg-blue-800 rounded text-white"
-                >
-                  <i class="fa-solid fa-pen-to-square"></i>
-                </button>
-                <button
-                  onClick={() => handleDelete(user.id)}
-                  className="px-2 py-1 bg-red-600 hover:bg-red-800 rounded text-white"
-                >
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 };
