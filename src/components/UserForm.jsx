@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 
 
 const API_URL = "http://localhost:5000/api/users";
@@ -16,7 +14,6 @@ const UserForm = () => {
   const [role, setRole] = useState("employee");
   const [salaryRate, setSalaryRate] = useState("");
   const [editingId, setEditingId] = useState(null);
-  const [search, setSearch] = useState("");
   const [employeeCode, setEmployeeCode] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState("");
@@ -97,47 +94,6 @@ const UserForm = () => {
     }
   };
 
-  const handleEdit = (user) => {
-    setFullName(user.full_name);
-    setEmail(user.email);
-    setPassword("");
-    setPhone(user.phone);
-    setRole(user.role);
-    setSalaryRate(user.salary_rate);
-    setEmployeeCode(user.employee_code || "");
-    setGender(user.gender || "");
-    setDob(user.dob || "");
-    setBirthPlace(user.birth_place || "");
-    setStatus(user.status || "");
-    setEditingId(user.id);
-  };
-
-  const handleDelete = async (id) => {
-    const result = await Swal.fire({
-      title: "Bạn có chắc muốn xoá?",
-      text: "Hành động này không thể hoàn tác!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Xoá",
-      cancelButtonText: "Huỷ",
-    });
-
-    if (result.isConfirmed) {
-      try {
-        await axios.delete(`${API_URL}/${id}`);
-        toast.success(" Xoá nhân viên thành công!");
-        fetchUsers();
-      } catch (err) {
-        console.error(err);
-        toast.error(" Xoá thất bại!");
-      }
-    }
-  };
-
-  // Lọc theo tên 
-  const filteredUsers = users.filter((user) =>
-    user.full_name.toLowerCase().includes(search.toLowerCase())
-  );
 
 
   return (
@@ -146,7 +102,8 @@ const UserForm = () => {
         Thêm nhân viên mới
       </h1>
 
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+      <div className="bg-white min-h-screen w-full p-8 rounded-2xl shadow-xl">
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10 ">
         <div className="space-y-4">
           <label className="block mb-1">Mã nhân viên :</label>
           <input
@@ -254,8 +211,8 @@ const UserForm = () => {
             className="border px-3 py-2 w-full"
           >
             <option value="">-- Chọn vị trí --</option>
-            <option value="admin">Admin</option>
-            <option value="nhanvien">Nhân viên</option>
+            <option value="Admin">Admin</option>
+            <option value="Nhân viên">Nhân viên</option>
           </select>
 
           <div>
@@ -281,6 +238,7 @@ const UserForm = () => {
           </button>
         </div>
       </form>
+      </div>
 
     </div>
   );

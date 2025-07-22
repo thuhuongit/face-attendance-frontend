@@ -19,7 +19,7 @@ const UserDetail = () => {
   if (!user) {
     return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
-        <div className="text-lg font-semibold text-gray-600">⏳ Đang tải dữ liệu...</div>
+        <div className="text-lg font-semibold text-gray-600"> Đang tải dữ liệu...</div>
       </div>
     );
   }
