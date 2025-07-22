@@ -9,6 +9,7 @@ import SalaryTable from "./components/SalaryTable";
 import UserForm from "./components/UserForm";
 import UserDetail from "./components/UserDetail"; 
 import EmployeeList from "./components/EmployeeList";
+import EditEmployee from "./components/EditEmployee";
 import ChangePassword from "./components/ChangePassword";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -46,6 +47,7 @@ const App = () => {
             />
             <Route path="/users/:id" element={<UserDetail />} />
             <Route path="/employees" element={<EmployeeList />} />
+            <Route path="/edit/:id" element={<EditEmployee />} />
             <Route path="/account/change-password" element={<ChangePassword />} />
           </Routes>
         </main>

@@ -41,11 +41,6 @@ const UserDetail = () => {
           </p>
         </div>
 
-        {/* Center: Logo */}
-        <div className="hidden lg:flex justify-center items-center w-1/3">
-          <img src="/logo_codedoan.png" alt="Logo" className="max-w-[180px]" />
-        </div>
-
         {/* Right: Detail Info */}
         <div className="w-full lg:w-1/3 mt-6 lg:mt-0 grid grid-cols-1 gap-3 text-gray-700">
           <InfoItem icon={<FaVenusMars />} label="Giới tính" value={user.gender} />
