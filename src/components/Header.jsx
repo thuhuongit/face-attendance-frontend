@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { FaExpand } from "react-icons/fa";
+import { FaExpand, FaBell, FaHome } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -9,23 +9,32 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();          
-    navigate("/login"); 
+    logout();
+    navigate("/login");
   };
 
   return (
-    <div className="flex justify-between items-center bg-white px-4 py-2 shadow relative">
-      {/* Left section - có thể để menu hoặc logo sau này */}
-      <div className="flex items-center gap-4"></div>
-
-      {/* Right section */}
+    <div className="flex justify-end items-center bg-white px-4 py-2 shadow relative">
       <div className="flex items-center gap-4 relative">
-        <img
-          src="https://flagcdn.com/w20/vn.png"
-          alt="flag"
-          className="w-5 h-5 rounded-full cursor-pointer"
-        />
-        <FaExpand className="text-gray-600 text-lg cursor-pointer" />
+        {/* Nút trang chủ */}
+        <div
+          className="flex items-center gap-1 cursor-pointer text-gray-700 hover:text-blue-500 px-2 py-1 rounded hover:bg-gray-100 transition-all duration-200"
+          onClick={() => navigate("/")}
+          title="Trang chủ"
+        >
+          <FaHome className="text-base" />
+          <span className="text-sm font-medium">Trang chủ</span>
+        </div>
+
+        {/* Nút thông báo */}
+        <div
+          className="flex items-center gap-1 cursor-pointer text-gray-700 hover:text-blue-500 px-2 py-1 rounded hover:bg-gray-100 transition-all duration-200"
+          onClick={() => alert("Không có thông báo mới.")}
+          title="Thông báo"
+        >
+          <FaBell className="text-base" />
+          <span className="text-sm font-medium">Thông báo</span>
+        </div>
 
         {/* Avatar + Dropdown */}
         <div className="relative">
@@ -40,9 +49,9 @@ const Header = () => {
             <div className="absolute right-0 mt-2 bg-white rounded shadow w-40 z-50">
               <button
                 onClick={handleLogout}
-                className="w-full text-left px-4 py-2 text-xm text-black hover:bg-gray-100"
+                className="w-full text-left px-4 py-2 text-sm text-black hover:bg-gray-100"
               >
-                 Đăng Xuất
+                Đăng Xuất
               </button>
             </div>
           )}
