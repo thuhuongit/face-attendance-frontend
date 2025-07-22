@@ -8,16 +8,22 @@ const SalaryTable = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    fetchSalary().then((res) => {
-      const raw = res.data;
-      // Chuyển object thành mảng để dễ xử lý
-      const arr = Object.entries(raw).map(([name, value]) => ({
+  fetchSalary().then((res) => {
+    const raw = res.data;
+
+    const arr = Object.entries(raw)
+      .map(([name, value]) => ({
         user_name: name,
         ...value,
-      }));
-      setSalaries(arr);
-    });
-  }, []);
+      }))
+      .filter((item) => item.employee_code && item.employee_code.trim() !== "");
+
+    setSalaries(arr);
+  });
+}, []);
+
+
+
 
   // Lọc theo tên người dùng
   const filteredData = salaries.filter((item) =>
